@@ -3,3 +3,8 @@ dist
 build
 .DS_Store
 *.log
+
+# 环境变量文件（本地开发用）
+.env
+.env.local
+.env.*.local

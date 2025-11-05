@@ -19,13 +19,24 @@ const quickQuestions = [
   '宠物营养搭配建议',
 ];
 
-const rawEndpoint = (
-  ((import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_BACKEND_URL) ??
-  (globalThis as { VITE_BACKEND_URL?: string }).VITE_BACKEND_URL ??
-  'http://localhost:3000'
-);
+// 根据环境自动选择后端地址
+const getBackendUrl = () => {
+  // 优先使用环境变量
+  const envUrl = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_BACKEND_URL;
+  if (envUrl) {
+    return envUrl;
+  }
+  
+  // 生产环境使用 Render 后端
+  if (import.meta.env.PROD) {
+    return 'https://pet-back-zk67.onrender.com';
+  }
+  
+  // 开发环境使用本地后端
+  return 'http://localhost:3000';
+};
 
-const API_ENDPOINT = rawEndpoint.replace(/\/$/, '');
+const API_ENDPOINT = getBackendUrl().replace(/\/$/, '');
 const createMessageId = () => Date.now() + Math.random();
 
 interface Pet {
