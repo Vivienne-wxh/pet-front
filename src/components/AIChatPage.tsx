@@ -20,15 +20,16 @@ const quickQuestions = [
 ];
 
 // 根据环境自动选择后端地址
-const getBackendUrl = () => {
+const getBackendUrl = (): string => {
   // 优先使用环境变量
   const envUrl = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_BACKEND_URL;
   if (envUrl) {
     return envUrl;
   }
   
-  // 生产环境使用 Render 后端
-  if (import.meta.env.PROD) {
+  // 生产环境使用 Render 后端（通过 import.meta.env.MODE 判断）
+  const isProd = (import.meta as unknown as { env?: { MODE?: string } }).env?.MODE === 'production';
+  if (isProd) {
     return 'https://pet-back-zk67.onrender.com';
   }
   
