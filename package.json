@@ -58,6 +58,6 @@
       },
       "scripts": {
           "dev": "vite",
-          "build": "npx --yes vite build"
+          "build": "node node_modules/vite/bin/vite.js build"
       }
   }
