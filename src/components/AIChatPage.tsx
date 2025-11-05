@@ -27,9 +27,14 @@ const getBackendUrl = (): string => {
     return envUrl;
   }
   
-  // 生产环境使用 Render 后端（通过 import.meta.env.MODE 判断）
-  const isProd = (import.meta as unknown as { env?: { MODE?: string } }).env?.MODE === 'production';
-  if (isProd) {
+  // 判断是否为生产环境：通过 hostname 判断（更可靠）
+  const isProduction = 
+    typeof window !== 'undefined' && 
+    !window.location.hostname.includes('localhost') && 
+    !window.location.hostname.includes('127.0.0.1');
+  
+  if (isProduction) {
+    // 生产环境使用 Render 后端
     return 'https://pet-back-zk67.onrender.com';
   }
   
