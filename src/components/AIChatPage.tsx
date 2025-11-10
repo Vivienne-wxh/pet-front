@@ -24,22 +24,30 @@ const getBackendUrl = (): string => {
   // 优先使用环境变量
   const envUrl = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_BACKEND_URL;
   if (envUrl) {
+    console.log('🔧 使用环境变量配置的后端地址:', envUrl);
     return envUrl;
   }
   
   // 判断是否为生产环境：通过 hostname 判断（更可靠）
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
   const isProduction = 
     typeof window !== 'undefined' && 
-    !window.location.hostname.includes('localhost') && 
-    !window.location.hostname.includes('127.0.0.1');
+    hostname !== 'localhost' && 
+    hostname !== '127.0.0.1' &&
+    !hostname.includes('localhost') &&
+    !hostname.includes('127.0.0.1');
   
-  if (isProduction) {
-    // 生产环境使用 Render 后端
-    return 'https://pet-back-zk67.onrender.com';
-  }
+  const backendUrl = isProduction 
+    ? 'https://pet-back-zk67.onrender.com'
+    : 'http://localhost:3000';
   
-  // 开发环境使用本地后端
-  return 'http://localhost:3000';
+  console.log('🌍 当前环境:', {
+    hostname,
+    isProduction,
+    backendUrl
+  });
+  
+  return backendUrl;
 };
 
 const API_ENDPOINT = getBackendUrl().replace(/\/$/, '');
