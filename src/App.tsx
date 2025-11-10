@@ -6,7 +6,6 @@ import { ProfilePage } from './components/ProfilePage';
 import { FoodDetailPage } from './components/FoodDetailPage';
 import { AddEditPetPage } from './components/AddEditPetPage';
 import { BottomNav } from './components/BottomNav';
-import { BetaAccessBanner } from './components/BetaAccessBanner';
 
 interface Pet {
   id?: number;
@@ -128,7 +127,7 @@ export default function App() {
       {activeTab === 'search' && (
         <div className="flex-1 pb-20">
           {/* Header */}
-          <header className="pt-12 pb-6 px-6 text-center">
+          <header className="pt-12 pb-8 px-6 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center">
                 <span className="text-2xl">🐾</span>
@@ -137,9 +136,6 @@ export default function App() {
             <h1 className="text-emerald-900 mb-1">AI宠物食品安全助手</h1>
             <p className="text-emerald-600/70 text-sm">守护爱宠健康每一餐</p>
           </header>
-
-          {/* 内测申请横幅 */}
-          <BetaAccessBanner />
 
           {/* Search Section */}
           <SearchSection onSearch={handleFoodSearch} />
